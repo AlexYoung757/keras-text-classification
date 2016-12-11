@@ -4,21 +4,21 @@ Train convolutional network for sentiment analysis. Based on
 http://arxiv.org/pdf/1408.5882v2.pdf
 
 For 'CNN-non-static' gets to 82.1% after 61 epochs with following settings:
-embedding_dim = 20          
+embedding_dim = 20
 filter_sizes = (3, 4)
 num_filters = 3
 dropout_prob = (0.7, 0.8)
 hidden_dims = 100
 
 For 'CNN-rand' gets to 78-79% after 7-8 epochs with following settings:
-embedding_dim = 20          
+embedding_dim = 20
 filter_sizes = (3, 4)
 num_filters = 150
 dropout_prob = (0.25, 0.5)
 hidden_dims = 150
 
 For 'CNN-static' gets to 75.4% after 7 epochs with following settings:
-embedding_dim = 100          
+embedding_dim = 100
 filter_sizes = (3, 4)
 num_filters = 150
 dropout_prob = (0.25, 0.5)
@@ -32,7 +32,7 @@ than the one introduced in the original article:
 - higher dropout probabilities and
 - 3 filters per filter size is enough for 'CNN-non-static' (instead of 100)
 - embedding initialization does not require prebuilt Google Word2Vec data.
-Training Word2Vec on the same "Movie reviews" data set is enough to 
+Training Word2Vec on the same "Movie reviews" data set is enough to
 achieve performance reported in the article (81.6%)
 
 ** Another distinct difference is slidind MaxPooling window of length=2
@@ -51,15 +51,15 @@ np.random.seed(2)
 # Parameters
 # ==================================================
 #
-# Model Variations. See Kim Yoon's Convolutional Neural Networks for 
+# Model Variations. See Kim Yoon's Convolutional Neural Networks for
 # Sentence Classification, Section 3 for detail.
 
 model_variation = 'CNN-rand'  #  CNN-rand | CNN-non-static | CNN-static
 print('Model variation is %s' % model_variation)
 
 # Model Hyperparameters
-sequence_length =61 
-embedding_dim = 20          
+sequence_length =68
+embedding_dim = 20
 filter_sizes = (3, 4)
 num_filters = 150
 dropout_prob = (0.25, 0.5)
@@ -67,12 +67,12 @@ hidden_dims = 150
 
 # Training parameters
 batch_size = 32
-num_epochs = 100
+num_epochs = 10
 val_split = 0.1
 
 # Word2Vec parameters, see train_word2vec
-min_word_count = 1  # Minimum word count                        
-context = 10        # Context window size    
+min_word_count = 1  # Minimum word count
+context = 10        # Context window size
 
 # Data Preparatopn
 # ==================================================
@@ -88,7 +88,7 @@ if model_variation=='CNN-non-static' or model_variation=='CNN-static':
 elif model_variation=='CNN-rand':
     embedding_weights = None
 else:
-    raise ValueError('Unknown model variation')    
+    raise ValueError('Unknown model variation')
 
 # Shuffle data
 shuffle_indices = np.random.permutation(np.arange(len(y)))
@@ -113,7 +113,7 @@ for fsz in filter_sizes:
     pool = MaxPooling1D(pool_length=2)(conv)
     flatten = Flatten()(pool)
     convs.append(flatten)
-    
+
 if len(filter_sizes)>1:
     out = Merge(mode='concat')(convs)
 else:
