@@ -63,6 +63,19 @@ def pad_sentences(sentences, padding_word="<PAD/>"):
     return padded_sentences
 
 
+def pad_sentence(sentence, padding_word="<PAD/>"):
+    """
+    Pads all sentences to the same length. The length is defined by the longest sentence.
+    Returns padded sentences.
+    """
+    padded_sentences = []
+    num_padding = 68 - len(sentence)
+    new_sentence = sentence + [padding_word] * num_padding
+    padded_sentences.append(new_sentence)
+    return padded_sentences
+
+
+
 def build_vocab(sentences):
     """
     Builds a vocabulary mapping from word to index based on the sentences.
@@ -84,6 +97,14 @@ def build_input_data(sentences, labels, vocabulary):
     x = np.array([[vocabulary[word] for word in sentence] for sentence in sentences])
     y = np.array(labels)
     return [x, y]
+
+
+def build_input_data_for_sentences(sentences, vocabulary):
+    """
+    Maps sentencs and labels to vectors based on a vocabulary.
+    """
+    x = np.array([[vocabulary[word] for word in sentence] for sentence in sentences])
+    return x
 
 
 def load_data():
@@ -114,3 +135,13 @@ def batch_iter(data, batch_size, num_epochs):
             start_index = batch_num * batch_size
             end_index = min((batch_num + 1) * batch_size, data_size)
             yield shuffled_data[start_index:end_index]
+
+def my_get_input_sentence():
+    raw = raw_input("input a news headline: ")
+    raw_comment_cut = raw.split()
+    sentence_padded = pad_sentence(raw_comment_cut)
+    vocabulary, vocabulary_inv = build_vocab(sentence_padded)
+    x = build_input_data_for_sentences(sentence_padded, vocabulary)
+    return x
+
+
