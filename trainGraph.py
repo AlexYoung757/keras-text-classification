@@ -58,7 +58,7 @@ model_variation = 'CNN-rand'  #  CNN-rand | CNN-non-static | CNN-static
 print('Model variation is %s' % model_variation)
 
 # Model Hyperparameters
-sequence_length = 56
+sequence_length =61 
 embedding_dim = 20          
 filter_sizes = (3, 4)
 num_filters = 150
@@ -138,4 +138,6 @@ model.compile(loss='binary_crossentropy', optimizer='rmsprop', metrics=['accurac
 # Training model
 # ==================================================
 model.fit(x_shuffled, y_shuffled, batch_size=batch_size,
-          nb_epoch=num_epochs, validation_split=val_split, verbose=2)
+          nb_epoch=num_epochs, validation_split=val_split, verbose=1)
+
+model.save('simple_net.h5')
