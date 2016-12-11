@@ -140,4 +140,4 @@ model.compile(loss='binary_crossentropy', optimizer='rmsprop', metrics=['accurac
 model.fit(x_shuffled, y_shuffled, batch_size=batch_size,
           nb_epoch=num_epochs, validation_split=val_split, verbose=1)
 
-model.save('simple_net.h5')
+model.save('save.h5')

@@ -75,7 +75,6 @@ def pad_sentence(sentence, padding_word="<PAD/>"):
     return padded_sentences
 
 
-
 def build_vocab(sentences):
     """
     Builds a vocabulary mapping from word to index based on the sentences.
