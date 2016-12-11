@@ -67,7 +67,7 @@ hidden_dims = 150
 
 # Training parameters
 batch_size = 32
-num_epochs = 10
+num_epochs = 1
 val_split = 0.1
 
 # Word2Vec parameters, see train_word2vec
