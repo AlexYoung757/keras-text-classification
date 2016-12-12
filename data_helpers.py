@@ -69,7 +69,7 @@ def pad_sentence(sentence, padding_word="<PAD/>"):
     Returns padded sentences.
     """
     padded_sentences = []
-    num_padding = 68 - len(sentence)
+    num_padding = 45 - len(sentence)
     new_sentence = sentence + [padding_word] * num_padding
     padded_sentences.append(new_sentence)
     return padded_sentences

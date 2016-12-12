@@ -42,9 +42,13 @@ instead of MaxPooling over whole feature map as in the article
 import numpy as np
 import data_helpers
 from w2v import train_word2vec
+import tensorflow as tf
+sess = tf.Session()
 
 from keras.models import Sequential, Model
 from keras.layers import Activation, Dense, Dropout, Embedding, Flatten, Input, Merge, Convolution1D, MaxPooling1D
+from keras import backend as K
+K.set_session(sess)
 
 np.random.seed(2)
 
@@ -54,20 +58,20 @@ np.random.seed(2)
 # Model Variations. See Kim Yoon's Convolutional Neural Networks for
 # Sentence Classification, Section 3 for detail.
 
-model_variation = 'CNN-rand'  #  CNN-rand | CNN-non-static | CNN-static
+model_variation = 'CNN-non-static'  #  CNN-rand | CNN-non-static | CNN-static
 print('Model variation is %s' % model_variation)
 
 # Model Hyperparameters
-sequence_length =68
+sequence_length = 45
 embedding_dim = 20
 filter_sizes = (3, 4)
-num_filters = 150
+num_filters = 128
 dropout_prob = (0.25, 0.5)
-hidden_dims = 150
+hidden_dims = 128 
 
 # Training parameters
 batch_size = 32
-num_epochs = 1
+num_epochs = 30
 val_split = 0.1
 
 # Word2Vec parameters, see train_word2vec
@@ -141,4 +145,4 @@ model.compile(loss='binary_crossentropy', optimizer='rmsprop', metrics=['accurac
 model.fit(x_shuffled, y_shuffled, batch_size=batch_size,
           nb_epoch=num_epochs, validation_split=val_split, verbose=1)
 
-model.save('save.h5')
+model.save('save_tmp.h5')
