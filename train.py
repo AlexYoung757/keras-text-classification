@@ -126,6 +126,7 @@ model = Sequential()
 if not model_variation=='CNN-static':
     model.add(Embedding(len(vocabulary), embedding_dim, input_length=sequence_length,
                         weights=embedding_weights))
+
 model.add(Dropout(dropout_prob[0], input_shape=(sequence_length, embedding_dim)))
 model.add(graph)
 model.add(Dense(hidden_dims))
